@@ -1,9 +1,14 @@
 import { Text } from "react-native"
+import { Container } from "./styles";
 
 const Home = () => {
 
     return(
-        <Text>Test</Text>
+        <Container>
+
+            <Text></Text>
+
+        </Container>
     )
 
 }
