@@ -1,14 +1,26 @@
-import { Text } from "react-native"
-import { Container } from "./styles";
+import { ContainerDark, ContainerGray, ContainerTitle, Rocket, Text } from "./styles";
 
 const Home = () => {
 
     return(
-        <Container>
+        <>
+            <ContainerDark> 
 
-            <Text></Text>
+                <Rocket source={require('../../images/rocket.png')}/>
 
-        </Container>
+                <ContainerTitle>
+                    <Text primary>to</Text>
+                    <Text>do</Text>
+                </ContainerTitle>
+
+            </ContainerDark>
+
+            <ContainerGray>
+
+
+
+            </ContainerGray>
+        </>
     )
 
 }
