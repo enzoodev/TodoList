@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import { StyleSheet } from 'react-native';
 
 export const fonts = {
     bold: 'InterBold',
@@ -81,9 +82,11 @@ export const ButtonAddParticipantText = styled.Text`
 `
 export const ContainerStatusTodoList = styled.View`
     width: 87%;
+    padding-bottom: 5%;
     flex-direction: row;
     justify-content: space-between;
-    margin-bottom: 6%;
+    border-bottom-color: ${colors.gray400};
+    border-bottom-width: ${StyleSheet.hairlineWidth};
 `
 export const StatusTodoList = styled.View`
     width: ${props => props.primary ? '27%' : '34%'};
@@ -134,4 +137,13 @@ export const TodoText = styled.Text`
     color:${props => props.isSelected ? `${colors.gray300}` : `${colors.gray100}`};
     font:14px ${fonts.regular};
     text-decoration: ${props => props.isSelected ? `line-through ${colors.gray300}` : ''};
+`
+export const ContainerListEmpty = styled.View`
+    height:200px;
+    align-items: center;
+    justify-content: center;
+`
+export const ContainerListEmptyText = styled.Text`
+    color:${colors.gray300};
+    font:14px ${fonts.regular};
 `

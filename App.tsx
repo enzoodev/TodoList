@@ -1,6 +1,7 @@
 import Home from './src/screens/home/index';
 import { useFonts } from 'expo-font';
 import AppLoading from 'expo-app-loading';
+import { StatusBar } from 'react-native';
 
 const App = () => {
 
@@ -14,7 +15,13 @@ const App = () => {
   }
 
   return(
-    <Home/>
+    <>
+      <StatusBar
+      barStyle='light-content'
+      backgroundColor={'transparent'}
+      translucent/>
+      <Home/>
+    </>
   )
   
 }

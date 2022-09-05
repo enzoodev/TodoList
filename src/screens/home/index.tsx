@@ -1,26 +1,31 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Alert, Image, FlatList , Text, TouchableOpacity } from "react-native";
 import {
     colors , ContainerDark, ContainerGray, ContainerTitle, Rocket, Title,
     Form, InputParticipant, ButtonAddParticipant, ButtonAddParticipantText,
     ButtonAddParticipantCircle, ContainerStatusTodoList, StatusTodoList,
     StatusTodoListText, ContainerNumberDestaqued, NumberDestaqued,
-    ContainerTodo, ButtonSelectItem, ContainerTodoText, TodoText
+    ContainerTodo, ButtonSelectItem, ContainerTodoText, TodoText,
+    ContainerListEmpty, ContainerListEmptyText
 } from "./styles";
 
 const Home = () => {
 
     const [todoList, setTodoList] = useState<string[]>([]);
     const [changeTodo, setChangeTodo] = useState<string>('');
-    const [selectedItems, setSelectedItems] = useState<any>(0);
 
     const handleTodoAdd = () => {
+        if(changeTodo === '') return Alert.alert('Todo List', 'Digite uma tarefa!');
         if(todoList.includes(changeTodo)) return Alert.alert("Todo List", "Essa tarefa já está na lista!");
         setTodoList([...todoList, changeTodo]);
+        console.log(todoList);
+        let filterTodo = todoList.filter((item:any) => {return item.isSelectedProp});
+        console.log(filterTodo);
     }
 
+
     const handleTodoRemove = (item: string) => {
-        Alert.alert('Todo', `Deseja excluir a tarefa ${item}?`, [
+        Alert.alert('Todo List', `Deseja excluir a tarefa ${item}?`, [
             {
                 text:'Sim',
                 onPress:() => {setTodoList(todoList.filter((itemDeleted) => {return itemDeleted !== item}))}
@@ -33,49 +38,47 @@ const Home = () => {
 
     type Props = {
         name: string;
+        isSelectedProp: any;
         onRemove: () => void;
     }
-    
-    const TodoItem = ({name, onRemove}: Props) => {
-        const [isSelect, useIsSelect] = useState<Boolean>(false);
 
-        useEffect(() => {
-/*             if(isSelect === true) return setSelectedItems(selectedItems + 1);
-            setSelectedItems(selectedItems - 1); */
+    const TodoItem = ({name, onRemove, isSelectedProp}: Props) => {
+        const [isSelect, setIsSelect] = useState<boolean>(false);
+        isSelectedProp = isSelect;
+
+        const handleModifyButton = () => {
             if(isSelect === true){
-                console.log("isSelect " + isSelect);
+                return(
+                    <ButtonSelectItem isSelected 
+                    onPress={() => {
+                        setIsSelect(false);
+                        
+                    }}>
+                        <Image source={require('../../assets/images/Vector.png')} />
+                        <Text style={{color:'white'}}>valor dos selectedItems</Text>
+                    </ButtonSelectItem>
+                )
             }
-            else{
-                console.log("isSelect false " + isSelect);
-            }
-        },[isSelect]);
-
-/*         const handleSelectedItems = () => {
-            if(isSelect === true) return setSelectedItems(selectedItems + 1);
-            setSelectedItems(selectedItems - 1);
-        } */
-    
-        const handleVector = () => {if(isSelect === true) return(<Image source={require('../../assets/images/Vector.png')}/>)};
+            return(
+                <ButtonSelectItem onPress={() => {
+                    setIsSelect(true);
+                }}>
+                    <Text style={{color:'white'}}>valor dos selectedItems</Text>
+                </ButtonSelectItem>
+            )
+        }    
     
         return(
             <ContainerTodo>
     
-                <ButtonSelectItem isSelected={isSelect} 
-                onPress={() => { 
-                    if(isSelect === false) useIsSelect(true);
-                    else useIsSelect(false);
-                }}>
-                    {handleVector()}
-                </ButtonSelectItem>
-    
+                {handleModifyButton()}
                 <ContainerTodoText>
                     <TodoText isSelected={isSelect}>{name}</TodoText>
                 </ContainerTodoText>
 
                 <TouchableOpacity onPress={onRemove}>
                     <Image source={require('../../assets/images/trash.png')}/>
-                </TouchableOpacity>
-    
+                </TouchableOpacity>    
     
             </ContainerTodo>
         )
@@ -97,47 +100,32 @@ const Home = () => {
             <ContainerGray>
 
                 <Form>
-
                     <InputParticipant
                     placeholder={'Adicione uma nova tarefa'}
                     placeholderTextColor={colors.gray300}
-                    onChangeText={(text: string) => {setChangeTodo(text)}}
-                    />
+                    onChangeText={(text: string) => {setChangeTodo(text)}}/>
 
                     <ButtonAddParticipant onPress={handleTodoAdd}>
-
                         <ButtonAddParticipantCircle>
-
                             <ButtonAddParticipantText>+</ButtonAddParticipantText>
-
                         </ButtonAddParticipantCircle>
-
                     </ButtonAddParticipant>
-                    
                 </Form>
 
                 <ContainerStatusTodoList>
-
                     <StatusTodoList primary>
-
                        <StatusTodoListText primary>Criadas</StatusTodoListText>
-
                        <ContainerNumberDestaqued>
                             <NumberDestaqued>{todoList.length}</NumberDestaqued>
                        </ContainerNumberDestaqued>
-
                     </StatusTodoList>
 
                     <StatusTodoList>
-
                         <StatusTodoListText>Concluídas</StatusTodoListText>
-                        
                         <ContainerNumberDestaqued>
-                            <NumberDestaqued>{selectedItems}</NumberDestaqued>
+                            <NumberDestaqued>20</NumberDestaqued>
                        </ContainerNumberDestaqued>
-
                     </StatusTodoList>
-
                 </ContainerStatusTodoList>
 
                 <FlatList
@@ -145,17 +133,21 @@ const Home = () => {
                     keyExtractor={item => item}
                     renderItem={({item}) => (
                         <TodoItem
+                            isSelectedProp={() => {isSelectedProp}}
+                            // imitar oque está feito na função onRemove
                             name={item}
                             onRemove={() => (handleTodoRemove(item))} 
                         />
                     )}
                     showsVerticalScrollIndicator={false}
-                    ListEmptyComponent={() => (
-                        <Text>
-                            Lista vazia, adicione gente
-                        </Text>
-                    )}
                     style={{width:'87%'}}
+                    ListEmptyComponent={() => (
+                        <ContainerListEmpty>
+                            <Image source={require('../../assets/images/Clipboard.png')}  style={{marginBottom:'10%'}}/>
+                            <ContainerListEmptyText>Você ainda não tem tarefas cadastradas</ContainerListEmptyText>
+                            <ContainerListEmptyText>Crie tarefas e organize seus itens a fazer</ContainerListEmptyText>
+                        </ContainerListEmpty>
+                    )}
                 />
 
             </ContainerGray>
