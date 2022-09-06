@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Alert, Image, FlatList , Text, TouchableOpacity } from "react-native";
 import {
     colors , ContainerDark, ContainerGray, ContainerTitle, Rocket, Title,
@@ -14,14 +14,27 @@ const Home = () => {
     const [todoList, setTodoList] = useState<string[]>([]);
     const [changeTodo, setChangeTodo] = useState<string>('');
 
+    const [myTodoList, setMyTodoList] = useState<any>([]);
+    const [newTask, setNewTask] = useState<any>({task:''});
+
+    useEffect(() => {
+/*         console.log(newTask); */
+/*         console.log(myTodoList); */
+    },[myTodoList]);
+
     const handleTodoAdd = () => {
-        if(changeTodo === '') return Alert.alert('Todo List', 'Digite uma tarefa!');
+/*         if(changeTodo === '') return Alert.alert('Todo List', 'Digite uma tarefa!');
         if(todoList.includes(changeTodo)) return Alert.alert("Todo List", "Essa tarefa já está na lista!");
-        setTodoList([...todoList, changeTodo]);
-        console.log(todoList);
-        let filterTodo = todoList.filter((item:any) => {return item.isSelectedProp});
-        console.log(filterTodo);
-    }
+        setTodoList([...todoList, changeTodo]); */
+
+        if(newTask.task === '') return Alert.alert('Todo List', 'Digite uma tarefa!');
+        if(myTodoList.includes(newTask)) return Alert.alert("Todo List", "Essa tarefa já está na lista!");
+        setMyTodoList([...myTodoList, newTask]);
+        let meuVar = myTodoList.filter((item: object[]) => {
+            return item
+        })
+        console.log(meuVar);
+   }
 
 
     const handleTodoRemove = (item: string) => {
@@ -38,13 +51,11 @@ const Home = () => {
 
     type Props = {
         name: string;
-        isSelectedProp: any;
         onRemove: () => void;
     }
 
-    const TodoItem = ({name, onRemove, isSelectedProp}: Props) => {
+    const TodoItem = ({name, onRemove}: Props) => {
         const [isSelect, setIsSelect] = useState<boolean>(false);
-        isSelectedProp = isSelect;
 
         const handleModifyButton = () => {
             if(isSelect === true){
@@ -103,7 +114,10 @@ const Home = () => {
                     <InputParticipant
                     placeholder={'Adicione uma nova tarefa'}
                     placeholderTextColor={colors.gray300}
-                    onChangeText={(text: string) => {setChangeTodo(text)}}/>
+                    onChangeText={(text: string) => {
+/*                         setChangeTodo(text); */
+                        setNewTask({task: text, isFinished: false});
+                    }}/>
 
                     <ButtonAddParticipant onPress={handleTodoAdd}>
                         <ButtonAddParticipantCircle>
@@ -129,12 +143,10 @@ const Home = () => {
                 </ContainerStatusTodoList>
 
                 <FlatList
-                    data={todoList}
+                    /* data={myTodoList} */
                     keyExtractor={item => item}
                     renderItem={({item}) => (
                         <TodoItem
-                            isSelectedProp={() => {isSelectedProp}}
-                            // imitar oque está feito na função onRemove
                             name={item}
                             onRemove={() => (handleTodoRemove(item))} 
                         />
