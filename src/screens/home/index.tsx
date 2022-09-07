@@ -9,17 +9,27 @@ import {
     ContainerListEmpty, ContainerListEmptyText
 } from "./styles";
 
+interface PropsTodoList {
+    task: string;
+    isFinished: boolean;
+}
+
 const Home = () => {
 
     const [todoList, setTodoList] = useState<string[]>([]);
     const [changeTodo, setChangeTodo] = useState<string>('');
 
-    const [myTodoList, setMyTodoList] = useState<any>([]);
+    const [myTodoList, setMyTodoList] = useState<Array<PropsTodoList>>([]);
     const [newTask, setNewTask] = useState<any>({task:''});
+
+    let myTodoListName:string[] = myTodoList.map(item => item.task);
+    let myTodoListIsSelect:boolean[] = myTodoList.map(item => item.isFinished);
+    let myTodoListIsSelectTrue:number = myTodoListIsSelect.filter(item => item === true).length;
 
     useEffect(() => {
 /*         console.log(newTask); */
-/*         console.log(myTodoList); */
+        console.log(myTodoList);
+        console.log(myTodoListIsSelect);
     },[myTodoList]);
 
     const handleTodoAdd = () => {
@@ -30,10 +40,7 @@ const Home = () => {
         if(newTask.task === '') return Alert.alert('Todo List', 'Digite uma tarefa!');
         if(myTodoList.includes(newTask)) return Alert.alert("Todo List", "Essa tarefa já está na lista!");
         setMyTodoList([...myTodoList, newTask]);
-        let meuVar = myTodoList.filter((item: object[]) => {
-            return item
-        })
-        console.log(meuVar);
+
    }
 
 
@@ -143,7 +150,7 @@ const Home = () => {
                 </ContainerStatusTodoList>
 
                 <FlatList
-                    /* data={myTodoList} */
+                    data={myTodoListName}
                     keyExtractor={item => item}
                     renderItem={({item}) => (
                         <TodoItem
