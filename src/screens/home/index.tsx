@@ -27,8 +27,7 @@ const Home = () => {
     let myTodoListIsSelectTrue:number = myTodoListIsSelect.filter(item => item === true).length;
 
     useEffect(() => {
-        console.log(myTodoList);
-        console.log(myTodoListIsSelect);
+        /* console.log(myTodoList); */
     },[myTodoList]);
 
     const handleTodoAdd = () => {
@@ -42,12 +41,11 @@ const Home = () => {
    }
 
 
-    const handleTodoRemove = (item:PropsTodoList) => {
+    const handleTodoRemove = (item:string) => {
         Alert.alert('Todo List', `Deseja excluir a tarefa ${item}?`, [
             {
                 text:'Sim',
-                /* onPress:() => {setTodoList(todoList.filter((itemDeleted) => {return itemDeleted !== item}))} */
-                onPress:() => {setMyTodoList(myTodoList.filter(itemDeleted => itemDeleted !== item))}
+                onPress:() => {setMyTodoList(myTodoList.filter(itemDeleted => itemDeleted.task !== item))}
             },{
                 text:'Não',
                 style:'cancel'
@@ -153,6 +151,7 @@ const Home = () => {
                     keyExtractor={item => item}
                     renderItem={({item}:any) => (
                         <TodoItem
+                            key={item}
                             name={item}
                             onRemove={() => (handleTodoRemove(item))} 
                         />
