@@ -27,7 +27,6 @@ const Home = () => {
     let myTodoListIsSelectTrue:number = myTodoListIsSelect.filter(item => item === true).length;
 
     useEffect(() => {
-/*         console.log(newTask); */
         console.log(myTodoList);
         console.log(myTodoListIsSelect);
     },[myTodoList]);
@@ -40,15 +39,15 @@ const Home = () => {
         if(newTask.task === '') return Alert.alert('Todo List', 'Digite uma tarefa!');
         if(myTodoList.includes(newTask)) return Alert.alert("Todo List", "Essa tarefa já está na lista!");
         setMyTodoList([...myTodoList, newTask]);
-
    }
 
 
-    const handleTodoRemove = (item: string) => {
+    const handleTodoRemove = (item:PropsTodoList) => {
         Alert.alert('Todo List', `Deseja excluir a tarefa ${item}?`, [
             {
                 text:'Sim',
-                onPress:() => {setTodoList(todoList.filter((itemDeleted) => {return itemDeleted !== item}))}
+                /* onPress:() => {setTodoList(todoList.filter((itemDeleted) => {return itemDeleted !== item}))} */
+                onPress:() => {setMyTodoList(myTodoList.filter(itemDeleted => itemDeleted !== item))}
             },{
                 text:'Não',
                 style:'cancel'
@@ -152,7 +151,7 @@ const Home = () => {
                 <FlatList
                     data={myTodoListName}
                     keyExtractor={item => item}
-                    renderItem={({item}) => (
+                    renderItem={({item}:any) => (
                         <TodoItem
                             name={item}
                             onRemove={() => (handleTodoRemove(item))} 
