@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
-import { Alert, Image, FlatList , Text, TouchableOpacity } from "react-native";
+import { useState, useContext } from "react";
+import { ConcludedItemsContext } from "../../contexts";
+import { Alert, Image, FlatList, TouchableOpacity, Text } from "react-native";
 import {
     colors , ContainerDark, ContainerGray, ContainerTitle, Rocket, Title,
     Form, InputParticipant, ButtonAddParticipant, ButtonAddParticipantText,
@@ -16,30 +17,17 @@ interface PropsTodoList {
 
 const Home = () => {
 
-    const [todoList, setTodoList] = useState<string[]>([]);
-    const [changeTodo, setChangeTodo] = useState<string>('');
+    const {concludedItems, setConcludedItems} = useContext(ConcludedItemsContext);
 
     const [myTodoList, setMyTodoList] = useState<Array<PropsTodoList>>([]);
+    const myTodoListName:string[] = myTodoList.map(({task}) => task);
     const [newTask, setNewTask] = useState<any>({task:''});
 
-    let myTodoListName:string[] = myTodoList.map(item => item.task);
-    let myTodoListIsSelect:boolean[] = myTodoList.map(item => item.isFinished);
-    let myTodoListIsSelectTrue:number = myTodoListIsSelect.filter(item => item === true).length;
-
-    useEffect(() => {
-        /* console.log(myTodoList); */
-    },[myTodoList]);
-
     const handleTodoAdd = () => {
-/*         if(changeTodo === '') return Alert.alert('Todo List', 'Digite uma tarefa!');
-        if(todoList.includes(changeTodo)) return Alert.alert("Todo List", "Essa tarefa já está na lista!");
-        setTodoList([...todoList, changeTodo]); */
-
         if(newTask.task === '') return Alert.alert('Todo List', 'Digite uma tarefa!');
         if(myTodoList.includes(newTask)) return Alert.alert("Todo List", "Essa tarefa já está na lista!");
         setMyTodoList([...myTodoList, newTask]);
    }
-
 
     const handleTodoRemove = (item:string) => {
         Alert.alert('Todo List', `Deseja excluir a tarefa ${item}?`, [
@@ -53,48 +41,38 @@ const Home = () => {
         ])
     }
 
+    const handleItemIsFinished = (item:string) => {
+        const {isSelect, setIsSelect} = useContext(ConcludedItemsContext);
+
+        const itemSelected = myTodoList.filter(({task}) => task === item)[0];
+        myTodoList.map(item => {if(item === itemSelected) item.isFinished = !item.isFinished});
+        setConcludedItems(myTodoList.filter(({isFinished}) => isFinished === true).length);
+        console.log('teste');
+        if(isSelect === true){return(
+            <ButtonSelectItem isSelected onPress={() => {setIsSelect(false)}}>
+                <Image source={require('../../assets/images/Vector.png')} />
+            </ButtonSelectItem>
+        )}
+        else { return(<ButtonSelectItem onPress={() => {setIsSelect(true);}}/>) }
+    }
+
     type Props = {
-        name: string;
+        taskText: string;
+        IsFinished:any;
         onRemove: () => void;
     }
 
-    const TodoItem = ({name, onRemove}: Props) => {
-        const [isSelect, setIsSelect] = useState<boolean>(false);
-
-        const handleModifyButton = () => {
-            if(isSelect === true){
-                return(
-                    <ButtonSelectItem isSelected 
-                    onPress={() => {
-                        setIsSelect(false);
-                        
-                    }}>
-                        <Image source={require('../../assets/images/Vector.png')} />
-                        <Text style={{color:'white'}}>valor dos selectedItems</Text>
-                    </ButtonSelectItem>
-                )
-            }
-            return(
-                <ButtonSelectItem onPress={() => {
-                    setIsSelect(true);
-                }}>
-                    <Text style={{color:'white'}}>valor dos selectedItems</Text>
-                </ButtonSelectItem>
-            )
-        }    
-    
+    const TodoItem = ({taskText, onRemove, IsFinished}: Props) => {
         return(
             <ContainerTodo>
-    
-                {handleModifyButton()}
+                <ButtonSelectItem onPress={() => { return(<IsFinished/>) }}/>
                 <ContainerTodoText>
-                    <TodoText isSelected={isSelect}>{name}</TodoText>
+                    <TodoText isSelected>{taskText}</TodoText>
                 </ContainerTodoText>
 
-                <TouchableOpacity onPress={onRemove}>
+                <TouchableOpacity onPress={() => onRemove()}>
                     <Image source={require('../../assets/images/trash.png')}/>
                 </TouchableOpacity>    
-    
             </ContainerTodo>
         )
     }
@@ -118,11 +96,8 @@ const Home = () => {
                     <InputParticipant
                     placeholder={'Adicione uma nova tarefa'}
                     placeholderTextColor={colors.gray300}
-                    onChangeText={(text: string) => {
-/*                         setChangeTodo(text); */
-                        setNewTask({task: text, isFinished: false});
-                    }}/>
-
+                    onChangeText={(text: string) => {setNewTask({task: text, isFinished: false});}}/>
+                    
                     <ButtonAddParticipant onPress={handleTodoAdd}>
                         <ButtonAddParticipantCircle>
                             <ButtonAddParticipantText>+</ButtonAddParticipantText>
@@ -134,14 +109,14 @@ const Home = () => {
                     <StatusTodoList primary>
                        <StatusTodoListText primary>Criadas</StatusTodoListText>
                        <ContainerNumberDestaqued>
-                            <NumberDestaqued>{todoList.length}</NumberDestaqued>
+                            <NumberDestaqued>{myTodoList.length}</NumberDestaqued>
                        </ContainerNumberDestaqued>
                     </StatusTodoList>
 
                     <StatusTodoList>
                         <StatusTodoListText>Concluídas</StatusTodoListText>
                         <ContainerNumberDestaqued>
-                            <NumberDestaqued>20</NumberDestaqued>
+                            <NumberDestaqued>{concludedItems}</NumberDestaqued>
                        </ContainerNumberDestaqued>
                     </StatusTodoList>
                 </ContainerStatusTodoList>
@@ -149,10 +124,12 @@ const Home = () => {
                 <FlatList
                     data={myTodoListName}
                     keyExtractor={item => item}
-                    renderItem={({item}:any) => (
+                    
+                    renderItem={({item}) => (
                         <TodoItem
                             key={item}
-                            name={item}
+                            taskText={item}
+                            IsFinished={() => (handleItemIsFinished(item))}
                             onRemove={() => (handleTodoRemove(item))} 
                         />
                     )}

@@ -68,8 +68,8 @@ export const ButtonAddParticipant = styled.TouchableOpacity`
     background-color: ${colors.blueDark};
 `
 export const ButtonAddParticipantCircle = styled.View`
-    width:40%;
-    height:40%;
+    width:35%;
+    height:35%;
     border-radius: 50%;
     align-items: center;
     justify-content: center;
@@ -77,7 +77,7 @@ export const ButtonAddParticipantCircle = styled.View`
 `
 export const ButtonAddParticipantText = styled.Text`
     color:${colors.gray100};
-    font: 20px ${fonts.regular};
+    font: 18px ${fonts.regular};
     margin-top: -4px;
 `
 export const ContainerStatusTodoList = styled.View`

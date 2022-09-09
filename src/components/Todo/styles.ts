@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import {fonts, colors} from '../../styles';
+import {fonts, colors} from '../../screens/home/styles';
 
 export const ContainerTodo = styled.View`
     padding:5% 0;
