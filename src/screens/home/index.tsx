@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { ConcludedItemsContext } from "../../context";
 import { Alert, Image, FlatList, TouchableOpacity } from "react-native";
-import { colors } from "../../globalStyles";
+import { colors } from "./styles";
 import {
     ContainerDark, ContainerGray, ContainerTitle, Rocket, Title,
     Form, InputParticipant, ButtonAddParticipant, ButtonAddParticipantText,
@@ -42,7 +42,10 @@ const Home = () => {
         Alert.alert('Todo List', `Deseja excluir a tarefa ${item}?`, [
             {
                 text:'Sim',
-                onPress:() => {setTodoList(todoList.filter(itemDeleted => itemDeleted.task !== item))}
+                onPress:() => {
+                    setTodoList(todoList.filter(itemDeleted => itemDeleted.task !== item))
+                    handleItemIsFinished(item);
+                }
             },{
                 text:'Não',
                 style:'cancel'
@@ -62,7 +65,7 @@ const Home = () => {
         const Button = () => {
             if(itemSelected.isFinished === true){
                 return(
-                    <ButtonSelectItem isSelected
+                    <ButtonSelectItem isActive
                     onPress={() => {isFinished();}}>
                         <Image source={require('../../assets/images/Vector.png')} />
                     </ButtonSelectItem>
@@ -76,7 +79,7 @@ const Home = () => {
 
                 <Button/>
                 <ContainerTodoText>
-                    <TodoText isSelected={itemSelected.isFinished}>{taskText}</TodoText>
+                    <TodoText isActive={itemSelected.isFinished}>{taskText}</TodoText>
                 </ContainerTodoText>
 
                 <TouchableOpacity onPress={() => onRemove()}>
@@ -115,8 +118,8 @@ const Home = () => {
                 </Form>
 
                 <ContainerStatusTodoList>
-                    <StatusTodoList primary>
-                       <StatusTodoListText primary>Criadas</StatusTodoListText>
+                    <StatusTodoList isActive>
+                       <StatusTodoListText isActive>Criadas</StatusTodoListText>
                        <ContainerNumberDestaqued>
                             <NumberDestaqued>{todoList.length}</NumberDestaqued>
                        </ContainerNumberDestaqued>

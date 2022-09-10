@@ -1,6 +1,25 @@
 import styled from 'styled-components/native';
 import { StyleSheet } from 'react-native';
-import { colors, fonts } from '../../globalStyles'
+
+export const fonts = {
+    bold: 'InterBold',
+    regular: 'InterRegular'
+};
+
+export const colors = {
+    gray100: '#F2F2F2',
+    gray200: '#D9D9D9',
+    gray300: '#808080',
+    gray400: '#333333',
+    gray500: '#262626',
+    gray600: '#1A1A1A',
+    gray700: '#0D0D0D',
+    purple: '#8284FA',
+    purpleDark: '#5E60CE',
+    blue: '#4EA8DE',
+    blueDark: '#1E6F9F',
+    danger: '#E25858'
+};
 
 interface Actived {
     readonly isActive: boolean;
@@ -27,7 +46,7 @@ export const ContainerTitle = styled.View`
 `
 export const Title = styled.Text<Actived>`
     font:40px ${fonts.bold};
-    color: ${props => props.isActive ? colors.blue : colors.purpleDark};
+    color: ${({isActive}) => isActive ? colors.blue : colors.purpleDark};
 `
 export const Form = styled.View`
     height: 9%;
@@ -73,14 +92,14 @@ export const ContainerStatusTodoList = styled.View`
     border-bottom-color: ${colors.gray400};
     border-bottom-width: ${StyleSheet.hairlineWidth};
 `
-export const StatusTodoList = styled.View`
-    width: ${props => props.primary ? '27%' : '34%'};
+export const StatusTodoList = styled.View<Actived>`
+    width: ${({isActive}) => isActive ? '27%' : '34%'};
     flex-direction: row;
     justify-content: space-between;
 `
-export const StatusTodoListText = styled.Text`
+export const StatusTodoListText = styled.Text<Actived>`
     font: 14px ${fonts.bold};
-    color:${props => props.primary ? colors.blue : colors.purple};
+    color:${({isActive}) => isActive ? colors.blue : colors.purple};
 `
 export const ContainerNumberDestaqued = styled.View`
     width: 25px;
@@ -104,24 +123,23 @@ export const ContainerTodo = styled.View`
     background-color: ${colors.gray500};
     border: 1px solid ${colors.gray400};
 `
-export const ButtonSelectItem = styled.TouchableOpacity`
+export const ButtonSelectItem = styled.TouchableOpacity<Actived>`
     height: 24px;
     width: 24px;
     border-radius: 50%;
     align-items: center;
     justify-content: center;
-    border: ${props => props.isSelected ? `2px solid ${colors.purpleDark}` : `2px solid ${colors.blue}`};
-    background-color: ${props => props.isSelected ? `${colors.purpleDark}` : `${colors.gray500}`};
+    border: ${({isActive}) => isActive ? `2px solid ${colors.purpleDark}` : `2px solid ${colors.blue}`};
+    background-color: ${({isActive}) => isActive ? `${colors.purpleDark}` : `${colors.gray500}`};
 `
 export const ContainerTodoText = styled.View`
     width:80%;
 `
-export const TodoText = styled.Text`
+export const TodoText = styled.Text<Actived>`
     padding: 0 6%;
-/*     text-align: center; */
-    color:${props => props.isSelected ? `${colors.gray300}` : `${colors.gray100}`};
+    color:${({isActive}) => isActive ? `${colors.gray300}` : `${colors.gray100}`};
     font:14px ${fonts.regular};
-    text-decoration: ${props => props.isSelected ? `line-through ${colors.gray300}` : ''};
+    text-decoration: ${({isActive}) => isActive ? `line-through ${colors.gray300}` : 'none'};
 `
 export const ContainerListEmpty = styled.View`
     height:200px;
