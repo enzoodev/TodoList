@@ -2,7 +2,7 @@ import Home from './src/screens/home/index';
 import { useFonts } from 'expo-font';
 import AppLoading from 'expo-app-loading';
 import { StatusBar } from 'react-native';
-import ConcludedItemsProvider from './src/contexts';
+import ConcludedItemsProvider from './src/context';
 
 const App = () => {
 

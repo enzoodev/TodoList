@@ -1,8 +1,9 @@
 import { useState, useContext } from "react";
-import { ConcludedItemsContext } from "../../contexts";
-import { Alert, Image, FlatList, TouchableOpacity, Text } from "react-native";
+import { ConcludedItemsContext } from "../../context";
+import { Alert, Image, FlatList, TouchableOpacity } from "react-native";
+import { colors } from "../../globalStyles";
 import {
-    colors , ContainerDark, ContainerGray, ContainerTitle, Rocket, Title,
+    ContainerDark, ContainerGray, ContainerTitle, Rocket, Title,
     Form, InputParticipant, ButtonAddParticipant, ButtonAddParticipantText,
     ButtonAddParticipantCircle, ContainerStatusTodoList, StatusTodoList,
     StatusTodoListText, ContainerNumberDestaqued, NumberDestaqued,
@@ -15,25 +16,33 @@ interface PropsTodoList {
     isFinished: boolean;
 }
 
+type PropsTodoItem = {
+    taskText: string;
+    isFinished: any;
+    onRemove: () => void;
+}
+
 const Home = () => {
 
     const {concludedItems, setConcludedItems} = useContext(ConcludedItemsContext);
 
-    const [myTodoList, setMyTodoList] = useState<Array<PropsTodoList>>([]);
-    const myTodoListName:string[] = myTodoList.map(({task}) => task);
+    const [todoList, setTodoList] = useState<Array<PropsTodoList>>([]);
+    const todoListName:string[] = todoList.map(({task}) => task);
     const [newTask, setNewTask] = useState<any>({task:''});
 
     const handleTodoAdd = () => {
         if(newTask.task === '') return Alert.alert('Todo List', 'Digite uma tarefa!');
-        if(myTodoList.includes(newTask)) return Alert.alert("Todo List", "Essa tarefa já está na lista!");
-        setMyTodoList([...myTodoList, newTask]);
+        if(todoList.includes(newTask)) return Alert.alert("Todo List", "Essa tarefa já está na lista!");
+        const teste:any = [...todoList, newTask];
+        console.log(teste);
+        setTodoList([...todoList, newTask]);
    }
 
     const handleTodoRemove = (item:string) => {
         Alert.alert('Todo List', `Deseja excluir a tarefa ${item}?`, [
             {
                 text:'Sim',
-                onPress:() => {setMyTodoList(myTodoList.filter(itemDeleted => itemDeleted.task !== item))}
+                onPress:() => {setTodoList(todoList.filter(itemDeleted => itemDeleted.task !== item))}
             },{
                 text:'Não',
                 style:'cancel'
@@ -42,32 +51,32 @@ const Home = () => {
     }
 
     const handleItemIsFinished = (item:string) => {
-        const {isSelect, setIsSelect} = useContext(ConcludedItemsContext);
-
-        const itemSelected = myTodoList.filter(({task}) => task === item)[0];
-        myTodoList.map(item => {if(item === itemSelected) item.isFinished = !item.isFinished});
-        setConcludedItems(myTodoList.filter(({isFinished}) => isFinished === true).length);
-        console.log('teste');
-        if(isSelect === true){return(
-            <ButtonSelectItem isSelected onPress={() => {setIsSelect(false)}}>
-                <Image source={require('../../assets/images/Vector.png')} />
-            </ButtonSelectItem>
-        )}
-        else { return(<ButtonSelectItem onPress={() => {setIsSelect(true);}}/>) }
+        const itemSelected = todoList.filter(({task}) => task === item)[0];
+        todoList.map(item => {if(item === itemSelected) item.isFinished = !item.isFinished});
+        setConcludedItems(todoList.filter(({isFinished}) => isFinished === true).length);
     }
 
-    type Props = {
-        taskText: string;
-        IsFinished:any;
-        onRemove: () => void;
-    }
+    const TodoItem = ({taskText, onRemove, isFinished}: PropsTodoItem) => {
+        const itemSelected = todoList.filter(({task}) => task === taskText)[0];
+        
+        const Button = () => {
+            if(itemSelected.isFinished === true){
+                return(
+                    <ButtonSelectItem isSelected
+                    onPress={() => {isFinished();}}>
+                        <Image source={require('../../assets/images/Vector.png')} />
+                    </ButtonSelectItem>
+                )
+            }
+            return( <ButtonSelectItem onPress={() => {isFinished();}}/> )
+        }
 
-    const TodoItem = ({taskText, onRemove, IsFinished}: Props) => {
         return(
             <ContainerTodo>
-                <ButtonSelectItem onPress={() => { return(<IsFinished/>) }}/>
+
+                <Button/>
                 <ContainerTodoText>
-                    <TodoText isSelected>{taskText}</TodoText>
+                    <TodoText isSelected={itemSelected.isFinished}>{taskText}</TodoText>
                 </ContainerTodoText>
 
                 <TouchableOpacity onPress={() => onRemove()}>
@@ -84,7 +93,7 @@ const Home = () => {
                 <Rocket source={require('../../assets/images/rocket.png')}/>
 
                 <ContainerTitle>
-                    <Title primary>to</Title>
+                    <Title isActive>to</Title>
                     <Title>do</Title>
                 </ContainerTitle>
 
@@ -109,7 +118,7 @@ const Home = () => {
                     <StatusTodoList primary>
                        <StatusTodoListText primary>Criadas</StatusTodoListText>
                        <ContainerNumberDestaqued>
-                            <NumberDestaqued>{myTodoList.length}</NumberDestaqued>
+                            <NumberDestaqued>{todoList.length}</NumberDestaqued>
                        </ContainerNumberDestaqued>
                     </StatusTodoList>
 
@@ -122,14 +131,14 @@ const Home = () => {
                 </ContainerStatusTodoList>
 
                 <FlatList
-                    data={myTodoListName}
+                    data={todoListName}
                     keyExtractor={item => item}
                     
                     renderItem={({item}) => (
                         <TodoItem
                             key={item}
                             taskText={item}
-                            IsFinished={() => (handleItemIsFinished(item))}
+                            isFinished={() => (handleItemIsFinished(item))}
                             onRemove={() => (handleTodoRemove(item))} 
                         />
                     )}
