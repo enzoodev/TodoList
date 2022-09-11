@@ -11,11 +11,11 @@
 
 ### 🛠 Tecnologias
 
-✔️[React Native](https://reactnative.dev/)
-✔️[TypeScript](https://www.typescriptlang.org/)
-✔️[React](https://pt-br.reactjs.org/)
-✔️[Expo](https://expo.io/)
-✔️[Styled-components](https://styled-components.com/)
+- [React Native](https://reactnative.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [React](https://pt-br.reactjs.org/)
+- [Expo](https://expo.io/)
+- [Styled-components](https://styled-components.com/)
 ---
 
 ### 🎲 Rodando o Mobile
