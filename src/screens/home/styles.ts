@@ -1,5 +1,4 @@
 import styled from 'styled-components/native';
-import { StyleSheet } from 'react-native';
 
 export const fonts = {
     bold: 'InterBold',
@@ -85,7 +84,7 @@ export const ContainerStatusTodoList = styled.View`
     flex-direction: row;
     justify-content: space-between;
     border-bottom-color: ${colors.gray400};
-    border-bottom-width: ${StyleSheet.hairlineWidth};
+    border-bottom-width: 1px;
 `
 export const StatusTodoList = styled.View<Actived>`
     width: ${({isActive}) => isActive ? '27%' : '34%'};
