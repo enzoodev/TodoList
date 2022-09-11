@@ -25,17 +25,12 @@ interface Actived {
     readonly isActive: boolean;
 }
 
-export const ContainerDark = styled.View`
-    height: 25%;
-    background-color: ${colors.gray700};
-    flex-direction: row;
+export const Container = styled.View<Actived>`
+    height: ${({isActive}) => isActive ? '25%' : '75%'};
     align-items: center;
     justify-content:center;
-`
-export const ContainerGray = styled.View`
-    height: 75%;
-    align-items: center;
-    background-color: ${colors.gray600};
+    flex-direction: ${({isActive}) => isActive ? 'row' : 'collumn'};
+    background-color: ${({isActive}) => isActive ? colors.gray700 : colors.gray600};
 `
 export const Rocket = styled.Image`
     margin-right:5px;
@@ -63,8 +58,11 @@ export const InputParticipant = styled.TextInput`
     color:${colors.gray100};
     background-color: ${colors.gray500};
     font:15px ${fonts.regular};
+    &:active{
+        outline: 10px solid red;
+    }
 `
-export const ButtonAddParticipant = styled.TouchableOpacity`
+export const ButtonAddParticipant = styled.Pressable`
     width: 16%;
     border-radius:5px;
     align-items: center;

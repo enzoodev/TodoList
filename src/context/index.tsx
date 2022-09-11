@@ -19,7 +19,7 @@ const initialValue = {
 export const ConcludedItemsContext = createContext<PropsInitialValue>(initialValue);
 
 const ConcludedItemsProvider = ({children}:PropsConcludedItemsContext) => {
-
+    
     const [concludedItems, setConcludedItems] = useState<number>(0);
     const [isSelect, setIsSelect] = useState<boolean>(false);
 
@@ -28,7 +28,6 @@ const ConcludedItemsProvider = ({children}:PropsConcludedItemsContext) => {
             {children}
         </ConcludedItemsContext.Provider>
     )
-    
 }
 
 export default ConcludedItemsProvider;
