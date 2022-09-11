@@ -11,16 +11,16 @@
 
 ### 🛠 Tecnologias
 
-- [React Native](https://reactnative.dev/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [React](https://pt-br.reactjs.org/)
-- [Expo](https://expo.io/)
-- [Styled-components](https://styled-components.com/)
+✔️ [React Native](https://reactnative.dev/)
+✔️ [TypeScript](https://www.typescriptlang.org/)
+✔️ [React](https://pt-br.reactjs.org/)
+✔️ [Expo](https://expo.io/)
+✔️ [Styled-components](https://styled-components.com/)
 ---
 
-## 🎲 Rodando o Mobile
+### 🎲 Rodando o Mobile
 
-### Pré-requisitos
+#### Pré-requisitos
 
 Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
 [Git](https://git-scm.com), [Node.js](https://nodejs.org/en/).
@@ -28,9 +28,9 @@ Além disto é bom ter um editor para trabalhar com o código como [VSCode](http
 
 ```bash
 # Clone este repositório
-$ git clone https://github.com/ARTHURPC03/Proffy-Mobile
+$ git clone https://github.com/Ninodev30/TodoList
 # Acesse a pasta do projeto no terminal/cmd
-$ cd Proffy-Mobile
+$ cd TodoList
 # Instale as dependências
 $ yarn
 # ou
