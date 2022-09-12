@@ -25,6 +25,7 @@ const Home = () => {
     const { concludedItems, setConcludedItems } = useContext<any>(ConcludedItemsContext);
     const [todoList, setTodoList] = useState<Array<PropsTodoList>>([]);
     const [newTask, setNewTask] = useState<any>({ task: '' });
+    const [isHandleBorderColor, setIsHandleBorderColor] = useState<boolean>(false);
 
     const todoListName: string[] = todoList.map(({ task }) => task);
 
@@ -100,7 +101,11 @@ const Home = () => {
                         placeholder={'Adicione uma nova tarefa'}
                         placeholderTextColor={colors.gray300}
                         onChangeText={(text: string) => { setNewTask({ task: text, isFinished: false }); }}
-                        value={newTask.task}/>
+                        value={newTask.task}
+                        onBlur={() => {setIsHandleBorderColor(false)}}
+                        onFocus={() => {setIsHandleBorderColor(true)}}
+                        isActive={isHandleBorderColor}
+                    />
 
                     <ButtonAddParticipant
                         style={({ pressed }) => [{ backgroundColor: pressed ? colors.blue : colors.blueDark }]}
