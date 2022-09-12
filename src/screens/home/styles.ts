@@ -50,7 +50,7 @@ export const Form = styled.View`
     justify-content: space-between;
     margin-bottom: 10%;
 `
-export const InputParticipant = styled.TextInput`
+export const InputParticipant = styled.TextInput<Actived>`
     width: 82%;
     padding:0 10px;
     border-radius:5px;
