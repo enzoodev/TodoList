@@ -57,6 +57,7 @@ export const InputParticipant = styled.TextInput`
     color:${colors.gray100};
     background-color: ${colors.gray500};
     font:15px ${fonts.regular};
+    border: ${({isActive}) => isActive ? `1px solid ${colors.purpleDark}` : 'none'};
 `
 export const ButtonAddParticipant = styled.Pressable`
     width: 16%;
