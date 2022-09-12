@@ -31,7 +31,8 @@ const Home = () => {
     const handleTodoAdd = () => {
         if (newTask.task === '') return Alert.alert('Todo List', 'Digite uma tarefa!');
         if (todoList.includes(newTask)) return Alert.alert("Todo List", "Essa tarefa já está na lista!");
-        setTodoList([...todoList, newTask]);
+        setTodoList([...todoList, newTask])
+        setNewTask({});
     }
 
     const handleTodoRemove = (item: string) => {
@@ -98,7 +99,8 @@ const Home = () => {
                     <InputParticipant
                         placeholder={'Adicione uma nova tarefa'}
                         placeholderTextColor={colors.gray300}
-                        onChangeText={(text: string) => { setNewTask({ task: text, isFinished: false }); }} />
+                        onChangeText={(text: string) => { setNewTask({ task: text, isFinished: false }); }}
+                        value={newTask.task}/>
 
                     <ButtonAddParticipant
                         style={({ pressed }) => [{ backgroundColor: pressed ? colors.blue : colors.blueDark }]}
