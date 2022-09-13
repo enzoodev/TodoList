@@ -11,7 +11,7 @@
 ## Sobre o Projeto
 
 O aplicativo é uma TodoList onde é possível adicionar/excluir tarefas, marcar as tarefas como concluídas e observar quantas foram criadas e concluídas.
-Esse foi meu primeiro projeto em React Native e TypeScript, portanto foi um grande aprendizado de como utilizar os componentes mais básicos do React Native além de aprender a utilizar a tipagem do TypeScripte e aplicar os principais métodos de manipulação de array
+Esse foi meu primeiro projeto em React Native e TypeScript, portanto foi um grande aprendizado de como utilizar os componentes mais básicos do React Native além de aprender a utilizar a tipagem do TypeScript e aplicar os principais métodos de manipulação de array
 
 ### 🛠 Tecnologias
 
