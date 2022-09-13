@@ -3,7 +3,7 @@
 ## Demo 📸
 
 <div align="center" >
-  <img src="./github/play1.MP4" alt="demo-mobile" height="425">
+  <img src="./github/play1.gif" alt="demo-mobile" height="425">
 </div>
 
 ---
