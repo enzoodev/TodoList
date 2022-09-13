@@ -56,7 +56,7 @@ const Home = () => {
 
     const handleItemIsFinished = (item: string) => {
         const itemSelected = todoList.filter(({ task }) => task === item)[0];
-        todoList.map(item => { if (item === itemSelected) item.isFinished = !item.isFinished });
+        todoList.map(item => { if (item === itemSelected) item.isFinished = !item.isFinished });    
         setConcludedItems(todoList.filter(({ isFinished }) => isFinished === true).length);
     }
 
