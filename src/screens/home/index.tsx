@@ -31,9 +31,9 @@ const Home = () => {
 
     const handleTodoAdd = () => {
         if (newTask.task === '') return Alert.alert('Todo List', 'Digite uma tarefa!');
-        if (todoList.includes(newTask)) return Alert.alert("Todo List", "Essa tarefa já está na lista!");
+        if (todoListName.includes(newTask.task)) return Alert.alert("Todo List", "Essa tarefa já está na lista!");
         setTodoList([...todoList, newTask])
-        setNewTask({});
+        setNewTask({ task: '', isFinished: false });
     }
 
     const handleTodoRemove = (item: string) => {
@@ -43,8 +43,8 @@ const Home = () => {
                 onPress: () => {
                     setTodoList(todoList.filter(itemDeleted => itemDeleted.task !== item));
                     const itemSelected = todoList.filter(({ task }) => task === item)[0];
-                    if(todoList.length === 1) return setConcludedItems(0);
-                    if(itemSelected.isFinished === true) return setConcludedItems(todoList.filter(({ isFinished }) => isFinished === true).length - 1);
+                    if (todoList.length === 1) return setConcludedItems(0);
+                    if (itemSelected.isFinished === true) return setConcludedItems(todoList.filter(({ isFinished }) => isFinished === true).length - 1);
                     return setConcludedItems(todoList.filter(({ isFinished }) => isFinished === true).length);
                 }
             }, {
@@ -105,8 +105,8 @@ const Home = () => {
                         placeholderTextColor={colors.gray300}
                         onChangeText={(text: string) => { setNewTask({ task: text, isFinished: false }); }}
                         value={newTask.task}
-                        onBlur={() => {setIsHandleBorderColor(false)}}
-                        onFocus={() => {setIsHandleBorderColor(true)}}
+                        onBlur={() => { setIsHandleBorderColor(false) }}
+                        onFocus={() => { setIsHandleBorderColor(true) }}
                         isActive={isHandleBorderColor}
                     />
 
