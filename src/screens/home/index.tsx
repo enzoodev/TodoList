@@ -41,8 +41,11 @@ const Home = () => {
             {
                 text: 'Sim',
                 onPress: () => {
-                    setTodoList(todoList.filter(itemDeleted => itemDeleted.task !== item))
-                    handleItemIsFinished(item);
+                    setTodoList(todoList.filter(itemDeleted => itemDeleted.task !== item));
+                    const itemSelected = todoList.filter(({ task }) => task === item)[0];
+                    if(todoList.length === 1) return setConcludedItems(0);
+                    if(itemSelected.isFinished === true) return setConcludedItems(todoList.filter(({ isFinished }) => isFinished === true).length - 1);
+                    return setConcludedItems(todoList.filter(({ isFinished }) => isFinished === true).length);
                 }
             }, {
                 text: 'Não',
