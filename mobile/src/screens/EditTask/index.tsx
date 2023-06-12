@@ -3,8 +3,8 @@ import React from "react";
 import * as S from './styles';
 import { useTheme } from "styled-components/native";
 
-export const CreateTask: React.FC = () => {
-  const theme = useTheme()
+export const EditTask: React.FC = () => {
+    const theme = useTheme()
     return(
         <S.InputParticipant
         placeholder={"Adicione uma nova tarefa"}

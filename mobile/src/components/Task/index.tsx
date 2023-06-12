@@ -1,12 +1,10 @@
 import React from "react";
-import { TouchableOpacity } from "react-native";
+import { Image, TouchableOpacity } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { useTheme } from "styled-components/native";
 import { Feather } from "@expo/vector-icons";
 
-import TrashIcon from "../../assets/images/trash.png";
-import VectorIcon from "../../assets/images/Vector.png";
-import { TaskDTO } from "../../dtos/tasks";
+import { TaskDTO } from "@dtos/tasks";
 
 import * as S from "./styles";
 
@@ -26,7 +24,7 @@ const TaskComponent: React.FC<Props> = ({
   return (
     <S.Container onPress={onEdit} activeOpacity={0.6}>
       <S.ButtonComplete isActive={!!item.completed_at}>
-        {!!item.completed_at && <VectorIcon />}
+        {!!item.completed_at && <Image source={require('@assets/images/Vector.png')} />}
       </S.ButtonComplete>
       <S.Content>
         <S.Title>{item.title}</S.Title>
@@ -41,7 +39,7 @@ const TaskComponent: React.FC<Props> = ({
           />
         </TouchableOpacity>
         <TouchableOpacity onPress={onRemove}>
-          <TrashIcon />
+          <Image source={require('@assets/images/trash.png')} />
         </TouchableOpacity>
       </S.Content>
     </S.Container>

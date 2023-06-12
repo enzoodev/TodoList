@@ -21,8 +21,8 @@ export const theme = {
 
   fonts: {
     family: {
-      bold: "Inter700Bold",
-      regular: "Inter400Regular",
+      bold: "Inter_700Bold",
+      regular: "Inter_400Regular",
     },
     
     sizes: {

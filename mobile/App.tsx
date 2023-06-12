@@ -1,12 +1,13 @@
-import { StatusBar } from "react-native";
+import { StatusBar, Text, View } from "react-native";
 import {
   useFonts,
   Inter_700Bold,
   Inter_400Regular,
 } from "@expo-google-fonts/inter";
-import AppLoading from "expo-app-loading";
+import { ThemeProvider } from "styled-components/native";
 
-import { Home } from "./src/screens/Home";
+import { Routes } from "@routes/index";
+import { theme } from "@theme/index";
 
 const App: React.FC = () => {
   const [fontsLoaded] = useFonts({
@@ -14,17 +15,20 @@ const App: React.FC = () => {
     Inter_400Regular,
   });
 
-  if (!fontsLoaded) return <AppLoading />;
+  if (!fontsLoaded) return null;
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <StatusBar
         barStyle="light-content"
         backgroundColor={"transparent"}
         translucent
       />
-      <Home />
-    </>
+      <Routes />
+      {/* <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <Text style={{fontFamily: 'Inter_700Bold'}}>Porra funciona caralho</Text>
+      </View> */}
+    </ThemeProvider>
   );
 };
 
